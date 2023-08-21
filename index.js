@@ -1,331 +1,17 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
-canvas.width=750
-canvas.height=1334
+canvas.width=600
+canvas.height=1000
 var hp =200
 var lvdan=1
 var uplv1=[]
+var fire = false
 const bg = new Image()
 bg.src = './bg/bg1.jpg'
 var frames = 0
 var wase = 1
 var energy=0
 
-class player
-{
-    constructor()
-    {
-        this.position={
-            x:canvas.width/2,
-            y:canvas.height/2
-        }
-        this.width =100
-        this.height=100
-        this.tg1=0
-        this.tg2=0
-        this.image = new Image()
-        this.image.src = './img/nv.png'
-    }
-    active()
-    {
-        this.tg1++
-        if(this.tg1 %5 ==0)
-        {
-            if(this.tg2 < 6)
-            {
-                this.tg2 ++
-            }
-            else{ this.tg2 = 0
-            this.tg1 =0}
-        }
-    }
-    draw()
-    {
-        c.drawImage(this.image
-            ,0
-            ,0
-            ,240
-            ,240
-            ,this.position.x-20
-            ,this.position.y-35
-            ,this.width+40
-            ,this.height+40
-            )
-    }
-    update()
-    {
-        this.position.x = mouse.x -this.width/2
-        this.position.y = mouse.y - this.height/2
-        this.active()
-        this.draw()
-
-    }
-}
-class bullet{
-    constructor(x1,y1,x2)
-    {
-        this.position={
-            x:x1,
-            y:y1
-        }
-        this.velocity = {
-            x:x2,
-            y:-10
-        }
-        
-        this.width =33
-        this.height=66
-    }
-    draw()
-    {   
-        c.beginPath()
-        c.arc(this.position.x,this.position.y,10,0,2*Math.PI)
-        c.fillStyle="yellow"
-        c.fill()
-    }
-    
-    update()
-    {
-        this.position.x +=this.velocity.x
-        this.position.y +=this.velocity.y
-        this.draw()
-
-    }
-}
-class bullete{
-    constructor(x1,y1,x2)
-    {
-        this.position={
-            x:x1,
-            y:y1
-        }
-        this.velocity = {
-            x:x2,
-            y:5
-        }
-       
-        this.width =10
-        this.height=10
-    }
-    draw()
-    { 
-        c.restore()
-        c.beginPath()
-        c.arc(this.position.x,this.position.y,5,0,2*Math.PI)
-        c.fillStyle="red"
-        c.fill()
-    }
-    update()
-    {
-        this.position.x +=this.velocity.x
-        this.position.y +=this.velocity.y
-        this.draw()
-
-    }
-}
-class enemy{
-    constructor(x1,y1)
-    {
-        this.position={
-            x:-1000+x1,
-            y:y1
-        }
-        this.velocity={
-            x:5,
-            y:0
-        }
-        this.width =55
-        this.height=60
-        this.image = new Image()
-        this.image.src = './img/Gobin1.png'
-    }
-    draw()
-    {   
-        c.drawImage(this.image,this.position.x,this.position.y)
-    }
-    update()
-    {
-        this.draw()
-        this.position.x +=this.velocity.x
-        this.position.y += this.velocity.y 
-       
-
-    }
-}
-class enemy2{
-    constructor(i1,j1)
-    {
-        this.position={
-            x:-1000,
-            y:0
-        }
-        this.velocity={
-            x:5,
-            y:0
-        }
-        this.i=i1 
-        this.j = j1
-        this.width = 100
-        this.height = 700
-        this.ga1 = []
-        for(var i=0;i<i1;i++)
-        for(var j=0;j<j1;j++)
-        {
-            this.ga1.push(new enemy(-i*100,j*100))
-        }
-    }
-    update()
-    {
-        this.position.x +=this.velocity.x
-        this.position.y += this.velocity.y 
-        if(this.position.x + this.width>=canvas.width+1000)
-        {
-            this.velocity.x =-5
-
-        }
-        else if(this.position.x<=-1000)
-        { this.velocity.x =5}
-        
-
-    }
-}
-class boom {
-    constructor(x1,y1)
-    {
-        this.position = {
-            x:x1,
-            y:y1
-        }
-        
-        this.width = 192
-        this.height = 141
-        this.image = new Image()
-        this.tg1 =0
-        this.tg2=0
-        this.imagenm = new Image()
-        this.imagenm.src = './img/no.png'
-        this.image = this.imagenm
-    }
-    active()
-    {
-        this.tg1++
-        if(this.tg1 %5 ==0)
-        {
-            if(this.tg2 < 5)
-            {
-                this.tg2 ++
-            }
-            else this.tg2 = 0
-        }
-    }
-    draw()
-    {
-
-        c.drawImage(this.image
-            ,192*this.tg2
-            ,0
-            ,192
-            ,141
-            ,this.position.x-60
-            ,this.position.y-35
-            ,this.width-30
-            ,this.height-30
-            
-            
-            )
-    }
-    update()
-    {
-        this.active()
-        this.draw()
-       
-    }
-}  
-class uplv
-{
-constructor(x1,y1)
-    {
-        this.position={
-            x:x1,
-            y:y1
-        }
-        this.velocity = {
-            x:0,
-            y:5
-        }
-        this.image = new Image()
-        this.image.src = './img/kiem.png'
-        this.width =60
-        this.height=60
-    }
-    draw()
-    { 
-        c.drawImage(this.image
-            ,0
-            ,0
-            ,240
-            ,240
-            ,this.position.x-20
-            ,this.position.y-35
-            ,this.width+40
-            ,this.height+40
-            )
-    }
-    update()
-    {
-        this.position.x +=this.velocity.x
-        this.position.y +=this.velocity.y
-        this.draw()
-
-    }
-}
-class boss{
-    constructor(x1,y1)
-    {
-        this.position={
-            x:x1,
-            y:y1
-        }
-        this.velocity={
-            x:5,
-            y:0
-        }
-        this.width =200
-        this.height=200
-        this.image = new Image()
-        this.image.src = './img/bos.png'
-        this.hp=1000
-    }
-    draw()
-    {   
-        c.drawImage(this.image
-            ,0
-            ,0
-            ,94
-            ,100
-            ,this.position.x-20
-            ,this.position.y-35
-            ,this.width+40
-            ,this.height+40
-            )
-    }
-    update()
-    {
-        this.draw()
-        this.position.x +=this.velocity.x
-        this.position.y += this.velocity.y 
-        if(this.position.x+this.width>=canvas.width)
-        {
-            this.velocity.x = -5
-        }
-        else if(this.position.x <=0)
-        {
-            this.velocity.x =5
-        }
-       
-
-    }
-}
 
 //-------------------------------------------------------------------------
 
@@ -340,62 +26,42 @@ const mouse = {
     y:undefined
 }
 var danga = (new enemy2(15,3))
-window.addEventListener('touchmove',(e)=>
+var tstart ={
+    x:0,y:0
+}
+var tend = {
+    x:0,y:0
+}
+var move = true
+window.addEventListener('touchstart',(e)=>
 {
     var touch=e.touches[0]
-    mouse.x = touch.clientX
-    mouse.y=touch.clientY
-    console.log(mouse.x)
+    tstart.x = touch.clientX
+    tstart.y= touch.clientY
+    console.log(tstart.x,tstart.y)
+    fire=true
+}) 
+window.addEventListener('touchend',(e)=>
+{
+    move =false
+    fire=false
+    energy =0
 })
 canvas.addEventListener('touchmove',(e)=>
 {
-    if(energy<100&&maybay.position.y>canvas.height/2-200)
+    fire = true
+    var touch=e.touches[0]
+    if(move)
+    {mouse.x = touch.clientX
+    mouse.y=touch.clientY
+    tend.x = maybay.position.x
+    tend.y=maybay.position.y}
+   
     
-    {if(lvdan==1)
-    {
-        dan.push(new bullet(mouse.x,mouse.y-50,0))
-        energy+=20
-    }
-    if(lvdan==2)
-    {
-        dan.push(new bullet(mouse.x-30,mouse.y-50,0))
-        dan.push(new bullet(mouse.x+30,mouse.y-50,0))
-        energy+=30
-    }
-    if(lvdan==3)
-    {
-        dan.push(new bullet(mouse.x-30,mouse.y-50,-1))
-        dan.push(new bullet(mouse.x+30,mouse.y-50,1))
-        dan.push(new bullet(mouse.x,mouse.y-50,0))
-        energy+=40
-    }
-    if(lvdan==4)
-    {
-        dan.push(new bullet(mouse.x-30,mouse.y-50,-1))
-        dan.push(new bullet(mouse.x+30,mouse.y-50,1))
-        dan.push(new bullet(mouse.x-30,mouse.y-50,0))
-        dan.push(new bullet(mouse.x+30,mouse.y-50,0))
-        energy+=50
-    }
-    if(lvdan==5)
-    {
-        dan.push(new bullet(mouse.x-30,mouse.y-50,-1))
-        dan.push(new bullet(mouse.x+30,mouse.y-50,1))
-        dan.push(new bullet(mouse.x-30,mouse.y-50,0))
-        dan.push(new bullet(mouse.x+30,mouse.y-50,0))
-        energy+=45
-    }
-    if(lvdan==6)
-    {
-        dan.push(new bullet(mouse.x-30,mouse.y-50,-1))
-        dan.push(new bullet(mouse.x+30,mouse.y-50,1))
-        dan.push(new bullet(mouse.x-30,mouse.y-50,0))
-        dan.push(new bullet(mouse.x+30,mouse.y-50,0))
-        energy+=40
-    } 
-}
     
+
 })
+
 function end()
 {
     bos.update()
@@ -436,15 +102,15 @@ function end()
         }
 
     c.fillStyle="red"    
-    c.fillRect(300,100,bos.hp,40)
+    c.fillRect(10,50,bos.hp,20)
     c.save()
     c.restore()
     c.strokeStyle="yellow"
-    c.strokeRect(300,100,1000,40)
+    c.strokeRect(10,50,1000,20)
     if(bos.hp<=0)
     {c.clearRect(0,0,canvas.width,canvas.height)
-        c.font = "300px Georgia"
-        c.fillText(" you win ",300,300)}
+        c.font = "100px Georgia"
+        c.fillText(" you win ",10,10)}
 }
 var random = 0
 //--------------------------------------------------------------
@@ -483,11 +149,6 @@ function animate()
      c.drawImage(bg,0,0)
     
     window.requestAnimationFrame(animate)
-    c.save()
-    c.globalAlpha=0.15
-    c.fillStyle = "green"
-        c.fillRect(0,canvas.height,canvas.width,-canvas.height/2-200)
-        c.restore()
     maybay.update()
     
     for(var i =0;i<uplv1.length;i++)
@@ -615,6 +276,15 @@ function animate()
                                                         no.splice(0,1)
                                                     },100)
                                                 }
+                         if (maybay.position.x+maybay.width> enemy.position.x
+                            &&maybay.position.x + maybay.width< enemy.position.x + enemy.width
+                            &&
+                            maybay.position.y+maybay.height/2>enemy.position.y&&
+                            maybay.position.y < enemy.position.y+enemy.height)
+                            {
+                                danga.ga1.splice(j,1)
+                                hp-=10
+                            }                        
                     })
                 }
             })
@@ -646,7 +316,51 @@ function animate()
             })
         }
         
-        
+    if(energy<300&&fire)
+    {
+     energy++
+    }
+    if(energy%14==0&&fire&&energy<300)
+    
+    {if(lvdan==1)
+    {
+        dan.push(new bullet(mouse.x,mouse.y-50,0))
+    }
+    if(lvdan==2)
+    {
+        dan.push(new bullet(mouse.x-30,mouse.y-50,0))
+        dan.push(new bullet(mouse.x+30,mouse.y-50,0))
+    }
+    if(lvdan==3)
+    {
+        dan.push(new bullet(mouse.x-30,mouse.y-50,-1))
+        dan.push(new bullet(mouse.x+30,mouse.y-50,1))
+        dan.push(new bullet(mouse.x,mouse.y-50,0))
+    }
+    if(lvdan==4)
+    {
+        dan.push(new bullet(mouse.x-30,mouse.y-50,-1))
+        dan.push(new bullet(mouse.x+30,mouse.y-50,1))
+        dan.push(new bullet(mouse.x-30,mouse.y-50,0))
+        dan.push(new bullet(mouse.x+30,mouse.y-50,0))
+    }
+    if(lvdan==5)
+    {
+        hp+=0.0001
+        dan.push(new bullet(mouse.x-30,mouse.y-50,-1))
+        dan.push(new bullet(mouse.x+30,mouse.y-50,1))
+        dan.push(new bullet(mouse.x-30,mouse.y-50,0))
+        dan.push(new bullet(mouse.x+30,mouse.y-50,0))
+    }
+    if(lvdan==6)
+    {
+        hp+=0.0002
+        dan.push(new bullet(mouse.x-30,mouse.y-50,-1))
+        dan.push(new bullet(mouse.x+30,mouse.y-50,1))
+        dan.push(new bullet(mouse.x-30,mouse.y-50,0))
+        dan.push(new bullet(mouse.x+30,mouse.y-50,0))
+    } 
+}   
     random = Math.floor(Math.random()*100)
     c.save()    
     c.fillStyle="red"    
@@ -659,16 +373,12 @@ function animate()
     c.font = "30px Georgia"
     c.fillText("Màn:"+wase,10,50)
     c.fillText("Đạn:"+lvdan,10,100)
-    if(energy>0)
-    {
-        energy--
-    }
     c.save()    
     c.fillStyle="yellow"    
-    c.fillRect(canvas.width-10,canvas.height-10,20,-energy*10)
+    c.fillRect(canvas.width-10,canvas.height-10,20,-energy*2)
     c.strokeStyle="yellow"
-    c.strokeRect(canvas.width-10,canvas.height-10,20,-1000)
-    
+    c.strokeRect(canvas.width-10,canvas.height-10,20,-300*2)
+
     if(danga.ga1.length==0&&wase==1)
     {
         setTimeout(()=>
@@ -724,12 +434,8 @@ function animate()
     {
         c.clearRect(0,0,canvas.width,canvas.height)
        
-        c.font = "300px Georgia"
-        c.fillText(" Gà ",300,300)
-    }
-    if(maybay.position.y <canvas.height/2-200)
-    {
-        hp--
+        c.font = "100px Georgia"
+        c.fillText(" Gà ",30,30)
     }
    
    }
