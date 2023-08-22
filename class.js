@@ -28,7 +28,7 @@ class player
     }
     draw()
     {
-        
+        c.fillRect(this.position.x,this.position.y,this.width,this.height)
         c.drawImage(this.image
             ,0
             ,0
