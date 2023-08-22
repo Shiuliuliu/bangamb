@@ -149,7 +149,7 @@ class enemy2{
     constructor(i1,j1)
     {
         this.position={
-            x:-1000,
+            x:0,
             y:0
         }
         this.velocity={
@@ -171,12 +171,12 @@ class enemy2{
     {
         this.position.x +=this.velocity.x
         this.position.y += this.velocity.y 
-        if(this.position.x >=canvas.width+1500)
+        if(this.position.x >canvas.width+2500)
         {
             this.velocity.x =-5
 
         }
-        else if(this.position.x<=0)
+        else if(this.position.x<0)
         { this.velocity.x =5}
         
 
