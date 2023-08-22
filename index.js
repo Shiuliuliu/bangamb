@@ -1,7 +1,7 @@
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
-canvas.width=550
-canvas.height=850
+canvas.width=414
+canvas.height=896
 var hp =200
 var lvdan=1
 var uplv1=[]
