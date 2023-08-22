@@ -28,7 +28,6 @@ class player
     }
     draw()
     {
-        c.fillRect(this.position.x,this.position.y,this.width,this.height)
         c.drawImage(this.image
             ,0
             ,0
@@ -125,7 +124,7 @@ class enemy{
             y:y1
         }
         this.velocity={
-            x:5,
+            x:3,
             y:0
         }
         this.width =25
@@ -154,7 +153,7 @@ class enemy2{
             y:0
         }
         this.velocity={
-            x:4,
+            x:3,
             y:0
         }
         this.i=i1 
@@ -174,11 +173,11 @@ class enemy2{
         this.position.y += this.velocity.y 
         if(this.position.x + this.width>=canvas.width+1500)
         {
-            this.velocity.x =-4
+            this.velocity.x =-3
 
         }
         else if(this.position.x<-200)
-        { this.velocity.x =4}
+        { this.velocity.x =3}
         
 
     }
