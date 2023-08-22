@@ -28,6 +28,7 @@ class player
     }
     draw()
     {
+        c.fillRect(this.position.x,this.position.y,this.width,this.height)
         c.drawImage(this.image
             ,0
             ,0
@@ -66,13 +67,13 @@ class bullet{
             y:-10
         }
         
-        this.width =33
-        this.height=66
+        this.width =30
+        this.height=30
     }
     draw()
     {   
         c.beginPath()
-        c.arc(this.position.x,this.position.y,10,0,2*Math.PI)
+        c.arc(this.position.x,this.position.y,5,0,2*Math.PI)
         c.fillStyle="yellow"
         c.fill()
     }
@@ -120,21 +121,21 @@ class enemy{
     constructor(x1,y1)
     {
         this.position={
-            x:-1000+x1,
+            x:x1,
             y:y1
         }
         this.velocity={
             x:5,
             y:0
         }
-        this.width =55
-        this.height=60
+        this.width =25
+        this.height=30
         this.image = new Image()
         this.image.src = './img/Gobin1.png'
     }
     draw()
     {   
-        c.drawImage(this.image,this.position.x,this.position.y)
+        c.drawImage(this.image,0,0,55,60,this.position.x,this.position.y,this.width,this.height)
     }
     update()
     {
@@ -153,7 +154,7 @@ class enemy2{
             y:0
         }
         this.velocity={
-            x:5,
+            x:4,
             y:0
         }
         this.i=i1 
@@ -164,20 +165,20 @@ class enemy2{
         for(var i=0;i<i1;i++)
         for(var j=0;j<j1;j++)
         {
-            this.ga1.push(new enemy(-i*100,j*100))
+            this.ga1.push(new enemy(-i*60,j*60))
         }
     }
     update()
     {
         this.position.x +=this.velocity.x
         this.position.y += this.velocity.y 
-        if(this.position.x >canvas.width+2500)
+        if(this.position.x + this.width>=canvas.width+1500)
         {
-            this.velocity.x =-5
+            this.velocity.x =-4
 
         }
-        else if(this.position.x<0)
-        { this.velocity.x =5}
+        else if(this.position.x<-200)
+        { this.velocity.x =4}
         
 
     }
@@ -221,10 +222,8 @@ class boom {
             ,141
             ,this.position.x-60
             ,this.position.y-35
-            ,this.width-30
-            ,this.height-30
-            
-            
+            ,this.width-100
+            ,this.height-80
             )
     }
     update()
@@ -260,8 +259,8 @@ constructor(x1,y1)
             ,72
             ,this.position.x-10
             ,this.position.y-10
-            ,this.width+12
-            ,this.height+42
+            ,this.width
+            ,this.height
             )
     }
     update()

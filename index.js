@@ -270,7 +270,7 @@ function animate()
                                                 }
                                                     dan.splice(i,1)
                                                     danga.ga1.splice(j,1)
-                                                    no.push(new boom(enemy.position.x,enemy.position.y))
+                                                    no.push(new boom(enemy.position.x+enemy.width/2,enemy.position.y+enemy.height/2))
                                                     setTimeout(()=>
                                                     {
                                                         no.splice(0,1)
@@ -279,7 +279,7 @@ function animate()
                          if (maybay.position.x+maybay.width> enemy.position.x
                             &&maybay.position.x + maybay.width< enemy.position.x + enemy.width
                             &&
-                            maybay.position.y+maybay.height/2>enemy.position.y&&
+                            maybay.position.y+maybay.height>enemy.position.y&&
                             maybay.position.y < enemy.position.y+enemy.height)
                             {
                                 danga.ga1.splice(j,1)
