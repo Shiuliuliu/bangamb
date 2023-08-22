@@ -171,7 +171,7 @@ class enemy2{
     {
         this.position.x +=this.velocity.x
         this.position.y += this.velocity.y 
-        if(this.position.x >=canvas.width+1000)
+        if(this.position.x >=canvas.width+1500)
         {
             this.velocity.x =-5
 
