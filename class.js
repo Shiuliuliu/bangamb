@@ -42,8 +42,8 @@ class player
     }
     update()
     {
-        if(tstart.x>=tend.x&&tstart.x<=tend.x+maybay.width&&
-            tstart.y>=tend.y&&tstart.y<=tend.y+maybay.height)
+        if(tstart.x>=tend.x-100&&tstart.x<=tend.x+maybay.width+100&&
+            tstart.y>=tend.y-100&&tstart.y<=tend.y+maybay.height+100)
         {
            move = true
         }
